@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
                 fileOne == NULL && fileTwo == NULL ? " and " : "",
                 fileTwo == NULL ? argv[2] : "");
             perror(error_message);
-            exit(-1);
+            exit(EXIT_FAILURE);
         }
     } else {
         printf("You must enter two arguments!");
