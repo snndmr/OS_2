@@ -35,10 +35,10 @@ gcc mul.c -lm -o output.out
 Multiple program launched!
 Parent has read file1.txt
 Child has read file2.txt
-The parent started the timer.
-Partial Sum is computed on parent
-Partial Sum is computed on child
-Child sent Partial sum to Parent
+The parent started the timer
+Partial sum is computed on child
+Child sent partial sum to Parent
+Partial sum is computed on parent
 The global average is computed on parent
 Mean is 52.35729
 Parent sent global average to child
@@ -47,5 +47,5 @@ Partial variance is computed on child
 Child sent partial variance to parent
 The standard deviation is computed on parent
 The standard deviation is 49.04489
-Calculation completed in 8 milliseconds.
+Calculation completed in 8 milliseconds
 ```
