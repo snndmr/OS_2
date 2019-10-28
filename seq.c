@@ -20,13 +20,13 @@ void findStandardDeviation(int* fileOneValues, int* fileTwoValues) {
         sum += *(fileTwoValues + index);
     }
     mean = sum / (2 * VALUE_SIZE);
-    printf("\n The average is: %.5lf", mean);
+    printf("\n The mean is: %.5lf", mean);
 
     for (int index = 0; index < VALUE_SIZE; index += 1) {
         standardDeviation += pow(*(fileOneValues + index) - mean, 2);
         standardDeviation += pow(*(fileTwoValues + index) - mean, 2);
     }
-    printf("\n The standard deviation: %.5lf", sqrt(standardDeviation / (2 * VALUE_SIZE)));
+    printf("\n The standard deviation is %.5lf", sqrt(standardDeviation / (2 * VALUE_SIZE)));
 }
 
 int main(int argc, char* argv[]) {
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
             exit(EXIT_FAILURE);
         }
     } else {
-        printf("You must enter two arguments!");
+        printf("You have to enter two arguments!");
     }
     return 0;
 }
