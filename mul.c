@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
 
                     mean += (sumChild + sumParent) / (2 * VALUE_SIZE);
                     printf("The global average is computed on parent\n");
-                    printf("Mean is %lf\n", mean);
+                    printf("Mean is %.5lf\n", mean);
 
                     write(pipeTwo[1], &mean, sizeof(mean)); // To send the mean to child.
                     printf("Parent sent global average to child\n");
@@ -74,6 +74,7 @@ int main(int argc, char* argv[]) {
                     clock_t difference = clock() - start;
                     printf("Calculation completed in %ld milliseconds.\n",
                     (difference * 1000 / CLOCKS_PER_SEC % 1000));  
+                    free(fileOneValues);
                 } else if (process == 0) {    
                     /* ----- CHILD ----- */
                     // To assign data from the file to the array.                
@@ -98,6 +99,7 @@ int main(int argc, char* argv[]) {
                     printf("Partial variance is computed on child\n");
                     write(pipeOne[1], &sigmaChild, sizeof(sigmaChild)); // To send the sigma of the child to parent.
                     printf("Child sent partial variance to parent\n");
+                    free(fileTwoValues);
                 } else {
                     printf("Pipes failed!");
                     exit(EXIT_FAILURE);
