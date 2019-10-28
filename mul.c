@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
             }
         } else {
             char error_message[STRING_BUFFER];
-            sprintf(error_message, "\n Could not open file(s) %s%s%s ",
+            sprintf(error_message, "\nCould not open file(s) %s%s%s ",
                 fileOne == NULL ? argv[1] : "",
                 fileOne == NULL && fileTwo == NULL ? " and " : "",
                 fileTwo == NULL ? argv[2] : "");
