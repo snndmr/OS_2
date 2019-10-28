@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
                     }
                     printf("Partial variance is computed on parent\n");
                     read(pipeOne[0], &sigmaChild, sizeof(sigmaChild)); // To receive the sigma of the child from child.
-                    printf("The standard deviation is computed on parent\nThe standard deviation: %.5lf\n", sqrt((sigmaParent + sigmaChild) / (2 * VALUE_SIZE)));
+                    printf("The standard deviation is computed on parent\nThe standard deviation is %.5lf\n", sqrt((sigmaParent + sigmaChild) / (2 * VALUE_SIZE)));
 
                     /* ----- END OF TIMER ----- */                    
                     clock_t difference = clock() - start;
