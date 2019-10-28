@@ -4,7 +4,7 @@
 
 ### Usage for sequential operation
 ```
-gcc mul.c -lm -o output.out
+gcc seq.c -lm -o output.out
 
 ./output.out file1.txt file2.txt
 ```
