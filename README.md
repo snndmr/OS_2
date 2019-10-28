@@ -46,6 +46,6 @@ Partial variance is computed on parent
 Partial variance is computed on child
 Child sent partial variance to parent
 The standard deviation is computed on parent
-The standard deviation: 49.04489
+The standard deviation is 49.04489
 Calculation completed in 8 milliseconds.
 ```
