@@ -9,14 +9,14 @@ gcc mul.c -lm -o output.out
 ./output.out file1.txt file2.txt
 ```
 
-### Output of sequential operation
+### Sample output of sequential operation
 
 ```
  Sequential program launched!
  Reading file1.txt
  Reading file2.txt
  Timer started.
- The average is 52.35729
+ The mean is 52.35729
  The standard deviation is 49.04489
  Calculation completed in 19 milliseconds.
 ```
@@ -29,7 +29,7 @@ gcc mul.c -lm -o output.out
 ./output.out file1.txt file2.txt
 ```
 
-### Output of multiprocess operation
+### Sample output of multiprocess operation
 
 ```
 Multiple program launched!
