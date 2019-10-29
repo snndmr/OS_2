@@ -23,11 +23,7 @@ void findStandardDeviation(int* fileOneValues, int* fileTwoValues) {
         sum += *(fileTwoValues + index);
     }
     mean = sum / (2 * VALUE_SIZE);
-<<<<<<< HEAD
     printf("The mean is: %.5lf\n", mean);
-=======
-    printf("The average is %.5lf\n", mean);
->>>>>>> 8ce9478e6408f415b83742ee680942df93e61cee
 
     for (index = 0; index < VALUE_SIZE; index += 1) {
         standardDeviation += pow(*(fileOneValues + index) - mean, 2);
@@ -59,15 +55,8 @@ int main(int argc, char* argv[]) {
             clock_t start = clock();
             findStandardDeviation(fileOneValues, fileTwoValues);
             clock_t difference = clock() - start;
-<<<<<<< HEAD
-            printf("Calculation completed in %ld milliseconds\n",
-=======
-            printf("Calculation completed in %ld milliseconds",
->>>>>>> 8ce9478e6408f415b83742ee680942df93e61cee
+			printf("Calculation completed in %ld milliseconds\n",
                 (difference * 1000 / CLOCKS_PER_SEC % 1000));
-
-            free(fileOneValues);
-            free(fileTwoValues);
         } else {
             char error_message[STRING_BUFFER];
             sprintf(error_message, "Could not open file(s) %s%s%s\n",
@@ -78,11 +67,7 @@ int main(int argc, char* argv[]) {
             exit(EXIT_FAILURE);
         }
     } else {
-<<<<<<< HEAD
         printf("You have to enter two arguments!\n");
-=======
-        printf("You must enter two arguments!\n");
->>>>>>> 8ce9478e6408f415b83742ee680942df93e61cee
     }
     return 0;
 }
