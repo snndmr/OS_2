@@ -7,26 +7,29 @@
 #define VALUE_SIZE 205000
 
 void readFromFile(FILE* file, int* values) {
-    for (int index = 0; fscanf(file, "%d", &*(values + index)) != EOF; index += 1){}
+	int index = 0;
+    for (index = 0; fscanf(file, "%d", &*(values + index)) != EOF; index += 1){}
+    fclose(file);
 }
 
-void findStandardDeviation(int* fileOneValues, int* fileTwoValues) {
-    double sum = 0.0;
+void findStandardDeviation(int* fileOneValues, int* fileTwoValues) { 
+	int index = 0;
+	double sum = 0.0;
     double mean = 0.0;
     double standardDeviation = 0.0;
-
-    for (int index = 0; index < VALUE_SIZE; index += 1) {
+    
+    for (index = 0; index < VALUE_SIZE; index += 1) {
         sum += *(fileOneValues + index);
         sum += *(fileTwoValues + index);
     }
     mean = sum / (2 * VALUE_SIZE);
-    printf("\n The mean is: %.5lf", mean);
+    printf("The mean is: %.5lf\n", mean);
 
-    for (int index = 0; index < VALUE_SIZE; index += 1) {
+    for (index = 0; index < VALUE_SIZE; index += 1) {
         standardDeviation += pow(*(fileOneValues + index) - mean, 2);
         standardDeviation += pow(*(fileTwoValues + index) - mean, 2);
     }
-    printf("\n The standard deviation is %.5lf", sqrt(standardDeviation / (2 * VALUE_SIZE)));
+    printf("The standard deviation is %.5lf\n", sqrt(standardDeviation / (2 * VALUE_SIZE)));
 }
 
 int main(int argc, char* argv[]) {
@@ -38,31 +41,28 @@ int main(int argc, char* argv[]) {
 
         if (fileOne != NULL && fileTwo != NULL) {
             // To store data read from the file.
-            printf("\n Sequential program launched!");
+            printf("Sequential program launched!\n");
             int* fileOneValues = (int*)calloc(VALUE_SIZE, sizeof(int));
             int* fileTwoValues = (int*)calloc(VALUE_SIZE, sizeof(int));
 
-            printf("\n Reading %s", argv[1]);
+            printf("Reading %s\n", argv[1]);
             readFromFile(fileOne, fileOneValues);
-            printf("\n Reading %s", argv[2]);
+            printf("Reading %s\n", argv[2]);
             readFromFile(fileTwo, fileTwoValues);
-
-            fclose(fileOne);
-            fclose(fileTwo);
-
+            
             // To calculate the elapsed time during operation.
-            printf("\n Timer started.");
+            printf("Timer started\n");
             clock_t start = clock();
             findStandardDeviation(fileOneValues, fileTwoValues);
             clock_t difference = clock() - start;
-            printf("\n Calculation completed in %ld milliseconds.\n\n",
+            printf("Calculation completed in %ld milliseconds\n",
                 (difference * 1000 / CLOCKS_PER_SEC % 1000));
 
             free(fileOneValues);
             free(fileTwoValues);
         } else {
             char error_message[STRING_BUFFER];
-            sprintf(error_message, "\n Could not open file(s) %s%s%s ",
+            sprintf(error_message, "Could not open file(s) %s%s%s\n",
                 fileOne == NULL ? argv[1] : "",
                 fileOne == NULL && fileTwo == NULL ? " and " : "",
                 fileTwo == NULL ? argv[2] : "");
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
             exit(EXIT_FAILURE);
         }
     } else {
-        printf("You have to enter two arguments!");
+        printf("You have to enter two arguments!\n");
     }
     return 0;
 }
