@@ -15,7 +15,7 @@ void readFromFile(FILE* file, int* values) {
 }
 
 int main(int argc, char* argv[]) {
-    printf("\nMultiple program launched!\n");
+    printf("Multiple program launched!\n");
 
     // To check the number of arguments.
     if (argc == 3) {
@@ -39,57 +39,67 @@ int main(int argc, char* argv[]) {
                 if (process > 0) {
                     /* ----- PARENT ----- */
                     // To assign data from the file to the array.             
-                    printf("Reading %s\n", argv[1]);
+                    printf("Parent has read %s\n", argv[1]);
                     int* fileOneValues = (int*)calloc(VALUE_SIZE, sizeof(int));
                     readFromFile(fileOne, fileOneValues);
 
                     /* ----- START OF TIMER ----- */
                     // To calculate elapsed time when finding standard deviation.
-                    printf("Timer started.\n");
+                    printf("The parent started the timer.\n");
                     clock_t start = clock();
 
                     for (int index = 0; index < VALUE_SIZE; index += 1) {
                         sumParent += *(fileOneValues + index);
                     }
+                    printf("Partial Sum is computed on parent\n");
                     close(pipeOne[1]);  // Writing was closed to read.
                     close(pipeTwo[0]);  // Reading was closed to write.
                     read(pipeOne[0], &sumChild, sizeof(sumChild)); // To receive sum of child from child.
 
                     mean += (sumChild + sumParent) / (2 * VALUE_SIZE);
-                    printf("The mean is %lf\n", mean);
+                    printf("The global average is computed on parent\n");
+                    printf("Mean is %.5lf\n", mean);
 
                     write(pipeTwo[1], &mean, sizeof(mean)); // To send the mean to child.
+                    printf("Parent sent global average to child\n");
 
                     for (int index = 0; index < VALUE_SIZE; index += 1) {
                         sigmaParent += pow(*(fileOneValues + index) - mean, 2);
                     }
+                    printf("Partial variance is computed on parent\n");
                     read(pipeOne[0], &sigmaChild, sizeof(sigmaChild)); // To receive the sigma of the child from child.
-                    printf("The standard deviation is %.5lf\n", sqrt((sigmaParent + sigmaChild) / (2 * VALUE_SIZE)));
+                    printf("The standard deviation is computed on parent\nThe standard deviation is %.5lf\n", sqrt((sigmaParent + sigmaChild) / (2 * VALUE_SIZE)));
 
                     /* ----- END OF TIMER ----- */                    
                     clock_t difference = clock() - start;
                     printf("Calculation completed in %ld milliseconds.\n",
                     (difference * 1000 / CLOCKS_PER_SEC % 1000));  
+                    free(fileOneValues);
                 } else if (process == 0) {    
                     /* ----- CHILD ----- */
                     // To assign data from the file to the array.                
-                    printf("Reading %s\n", argv[2]);
+                    printf("Child has read %s\n", argv[2]);
                     int* fileTwoValues = (int*)calloc(VALUE_SIZE, sizeof(int));
                     readFromFile(fileTwo, fileTwoValues);
 
                     for (int index = 0; index < VALUE_SIZE; index += 1) {
                         sumChild += *(fileTwoValues + index);
                     }
+                    printf("Partial Sum is computed on child\n");
                     close(pipeOne[0]);  // Reading was closed to write.
                     close(pipeTwo[1]);  // Writing was closed to read.
 
                     write(pipeOne[1], &sumChild, sizeof(sumChild)); // To send the sum of the child to parent.
+                    printf("Child sent Partial sum to Parent\n");
                     read(pipeTwo[0], &mean, sizeof(mean)); // To receive the mean from parent.
 
                     for (int index = 0; index < VALUE_SIZE; index += 1) {
                         sigmaChild += pow(*(fileTwoValues + index) - mean, 2);
                     }
+                    printf("Partial variance is computed on child\n");
                     write(pipeOne[1], &sigmaChild, sizeof(sigmaChild)); // To send the sigma of the child to parent.
+                    printf("Child sent partial variance to parent\n");
+                    free(fileTwoValues);
                 } else {
                     printf("Pipes failed!");
                     exit(EXIT_FAILURE);
