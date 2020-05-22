@@ -1,4 +1,4 @@
-# OS 2
+# Operating systems multi processing
 
 #### Computing Standard Deviation with 2-processes on a multi-core CPU.
 
